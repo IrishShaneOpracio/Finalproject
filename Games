@@ -1,0 +1,152 @@
+#include <iostream>
+#include <ctime>
+#include <string>
+#include <cstdlib>
+using namespace std;
+
+int main()
+{
+    int pcard[3], dcard[3], pvalue, dvalue;
+    int pwin=0, dwin=0, tie=0;
+    char choice, draw, play;
+    srand(time(0));
+
+ //GAME START
+    do{
+                // system("cls") is used for clearing the command prompt every game
+                system("cls");
+
+                //displays the scoreboard at the top
+                cout<<"SCOREBOARD";
+                cout<<"\nPlayer: "<<pwin;
+                cout<<"\nDealer: "<<dwin;
+                cout<<"\nTie: "<<tie;
+
+                //using do while loop so the accepted choice is only 'Y'/'y' or 'N'/'n'
+            do{
+                cout<< "\n\nLUCKY 9!";
+                cout << "\nDraw cards?( Y / N ): ";
+                cin>>choice;
+            }
+            while(choice != 'Y' && choice != 'y' && choice != 'N' && choice != 'n');
+
+            if(choice == 'N' || choice == 'n')
+            {
+                cout<<"\nThank you! Exiting program now!\n";
+              return 0;
+            }
+
+                cout <<"\nThe dealer is now drawing cards!\n";
+                //used for loop to store card value to arrays
+                for(int i = 0; i<=2; i++)
+                {
+                    pcard[i] = rand()%9+1;
+                }
+
+                for(int i = 0; i<=2; i++)
+                {
+                    dcard[i] = rand()%9+1;
+                }
+
+                //displays both cards
+                cout<<"Player card 1: "<<pcard[0];
+                cout<<"\nPlayer card 2: "<<pcard[1];
+                cout<<"\n\nDealer card 1: "<<dcard[0];
+                cout<<"\nDealer card 2: "<<dcard[1];
+
+                //card value is modulus 10 because lucky 9 is 1-9 only
+                pvalue = (pcard[0] + pcard[1]) % 10;
+                dvalue = (dcard[0] + dcard[1]) % 10;
+                cout<<"\n\nYour card value: "<<pvalue<<" VS " <<"Dealer's card value: "<<dvalue%10<<"\n";
+
+
+                //if else statements if the player or dealer hits a lucky 9
+                if(pvalue == 9)
+                {
+                    cout<<"\nLUCKY 9! YOU WIN!";
+                    pwin++;
+                }
+                else if(dvalue == 9)
+                {
+                    cout<<"\nThe dealer hits a Lucky 9! YOU LOSE!";
+                    dwin++;
+                }
+                else
+                {
+
+                    //asks the user if they want to hit or draw another card or they want to stand or stay with their current cards
+                    cout<<"\n\nDo you want to Hit or Stand";
+                    do{
+                    cout<<"\n( H / S ): ";
+                    cin>>draw;
+                    }
+                    while(draw != 'H' && draw != 'h' && draw != 'S' && draw != 's');
+                        if(draw == 'H' || draw == 'h')
+                        {
+                            cout<<"\nThe dealer gives you another card";
+                            pcard[2] = rand()%9+1;
+                            pvalue = (pcard[0] +pcard[1] + pcard[2])%10;
+
+                            cout<<"\nPlayer card 3: "<<pcard[2];
+                            cout<<"\n\nYour card value: "<<pvalue<<" VS " <<"Dealer's card value: "<<dvalue%10<<"\n";
+                        }
+                        else
+                        {
+                            cout<<"\nYou chose to stand";
+                        }
+
+                    //dealer's if else logic for drawing another card
+                    if(dvalue <= 4)
+                    {
+                        cout<<"\nThe dealer draws another card";
+                        dcard[2] = rand()%9+1;
+                        cout<<"\nDealer's card 3: "<< dcard[2];
+                        dvalue = (dcard[0] + dcard[1] + dcard[2])%10;
+                        cout<<"\n\nYour card value: "<<pvalue<<" VS " <<"Dealer's card value: "<<dvalue%10<<"\n";
+                    }
+
+
+                    //if else statements for checking the winner
+                    if(pvalue>dvalue)
+                    {
+                        cout<<"\n\nCONGRATULATIONS! YOU WIN!";
+                        pwin++;
+                    }
+                    else if(dvalue>pvalue)
+                    {
+                        cout<<"\n\nYOU LOSE!";
+                        dwin++;
+                    }
+                    else{
+                        cout<<"\n\nIt's a tie!";
+                        tie++;
+                    }
+                }
+                cout<<"\n\nSCOREBOARD";
+                cout<<"\nPlayer: "<<pwin;
+                cout<<"\nDealer: "<<dwin;
+                cout<<"\nTie: "<<tie;
+
+
+                // do while loop for asking the player if they want to play again
+                do
+                {
+                    cout<<"\n\nDo you want to play again?( Y / N ): ";
+                    cin>>play;
+                }
+                while(play != 'y' && play != 'Y' && play != 'n' && play !='N');
+
+            //starts the game over again if the user chooses 'Y'/'y'
+            } while(play == 'y'|| play =='Y');
+
+    //displays the final score before exiting the program
+    cout<<"\n\nFINAL SCORE";
+    cout<<"\nPlayer: "<<pwin;
+    cout<<"\nDealer: "<<dwin;
+    cout<<"\nTie: "<<tie;
+    cout<<"\n\nTHANK YOU FOR PLAYING!\n";
+
+
+    return 0;
+
+}
